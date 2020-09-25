@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import {
-  Container,
+  Container, Row, Col,
   Card, CardImg, CardText, CardBody,
   CardTitle, CardSubtitle, Button
 } from 'reactstrap';
@@ -29,13 +29,13 @@ const Saved = props => {
         setSavedState({ ...savedState, saved })
       })
       .catch(err => console.log(err))
-      
+
   }
 
 
   return (
     <>
-      <h1>Saved page</h1>
+      <h1 className="mySavedBooks">My Saved Books:</h1>
       <Container>
 
         {
@@ -43,16 +43,25 @@ const Saved = props => {
             savedState.saved.map(book => (
               <div>
                 <Card>
-                  <CardImg src={book.image} alt={book.title} />
-                  <CardBody>
-                    <CardTitle>{book.title}</CardTitle>
-                    <CardSubtitle>Written by: {book.authors}</CardSubtitle>
-                    <CardText>{book.description}</CardText>
-                    <a href={book.link}>
-                      <Button>View</Button> {' '}
-                    </a>
-                    <Button onClick={() => savedState.handleDeleteBook(book._id)}>Delete</Button>
-                  </CardBody>
+                  <Row>
+                    <Col sm='3'>
+
+                      <CardImg className="test" src={book.image} alt={book.title} />
+                    </Col>
+                    <Col sm='9'>
+
+                      <CardBody>
+                        <CardTitle>{book.title}</CardTitle>
+                        <CardSubtitle>Written by: {book.authors}</CardSubtitle>
+                        <br/>
+                        <CardText>Description: {book.description}</CardText>
+                        <a href={book.link}>
+                          <Button>View</Button> {' '}
+                        </a>
+                        <Button onClick={() => savedState.handleDeleteBook(book._id)}>Delete</Button>
+                      </CardBody>
+                    </Col>
+                  </Row>
                 </Card>
               </div>
             ))
