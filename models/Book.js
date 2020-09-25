@@ -7,7 +7,8 @@ const Book = new Schema({
   }],
   description: String,
   image: String,
-  link: String
+  link: String,
+  googleId: String
 })
 
 module.exports = model('Book', Book)
