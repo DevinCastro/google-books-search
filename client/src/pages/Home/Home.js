@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
 import { Container, Jumbotron, Button } from 'reactstrap';
 import { Form, FormGroup, Label, Input, FormText } from 'reactstrap';
-// import axios from 'axios'
+import axios from 'axios'
+import BookCard from '../../components/BookCard'
 
-
-const Home = props => {
+const Home = () => {
 
   const [bookState, setBookState] = useState({
     book: '',
@@ -17,7 +17,15 @@ const Home = props => {
 
   bookState.handleBookSearch = event => {
     event.preventDefault()
-    console.log('vince vapes')
+    
+    // fire axios request to googlebooks api
+    axios.get(`/api/googlebooks/${bookState.book}`)
+      .then(({data}) => {
+        console.log(data)
+
+        setBookState({ ...bookState, books: data, book: '' })
+      })
+      .catch(err => console.log(err))
   }
 
 
@@ -34,7 +42,7 @@ const Home = props => {
 
             <div>
 
-              <Form>
+              <Form onSubmit={bookState.handleBookSearch}>
                 <FormGroup>
                   <Label for="book">Book Name</Label>
                   <Input
@@ -49,10 +57,31 @@ const Home = props => {
 
             </div>
 
-
-
-
           </Jumbotron>
+
+          <div>
+
+            {
+              bookState.books.length > 0 ? (
+                bookState.books.map(book => (
+                  <BookCard
+                    key={book.googleId}
+                    id={book._id}
+                    title={book.title}
+                    authors={book.authors}
+                    description={book.description}
+                    image={book.image}
+                    link={book.link}
+                    />
+                ))
+              ) : null
+            }
+
+          </div>
+
+
+
+
         </div>
       </Container>
     </>
