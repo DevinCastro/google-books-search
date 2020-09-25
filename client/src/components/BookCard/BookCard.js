@@ -1,28 +1,12 @@
-import React, { useState } from 'react'
+import React from 'react'
 import {
   Card, CardImg, CardText, CardBody,
   CardTitle, CardSubtitle, Button
 } from 'reactstrap';
-import axios from 'axios'
 
 
 const BookCard = props => {
 
-  // const [savedState, setSavedState] = useState({
-  //   saved: []
-  // })
-
-  // savedState.handleSavedBook = event => {
-  //   event.preventDefault()
-    
-  //   // execute post request to save our book into the database
-  //   axios.post('/api/books', {
-      
-  //   })
-    
-
-
-  // }
 
   return (
     <>
