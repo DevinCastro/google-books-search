@@ -27,6 +27,20 @@ const Home = () => {
       })
       .catch(err => console.log(err))
   }
+  bookState.handleSaveBook = googleId => {
+    // filter through our searched books array and assign the the saved book with the proper googleId to a new variable called saved book.  so now we can feed that savedBook to out axios post request
+    const savedBook = bookState.books.filter(x => x.googleId === googleId)[0]
+    // execute post request to save our book into the database
+    axios.post('/api/books', savedBook)
+      .then(() => {
+        // set our books array in the bookState to be the ones that we HAVE NOT saved yet.
+        const books = bookState.books.filter(x => x.googleId !== googleId)
+        setBookState({ ...bookState, books })
+      })
+      .catch(err => console.log(err))
+
+
+  }
 
 
 
@@ -65,13 +79,14 @@ const Home = () => {
               bookState.books.length > 0 ? (
                 bookState.books.map(book => (
                   <BookCard
-                    key={book.googleId}
-                    id={book._id}
+                    key={book._id}
+                    id={book.googleId}
                     title={book.title}
                     authors={book.authors}
                     description={book.description}
                     image={book.image}
                     link={book.link}
+                    handleSaveBook={bookState.handleSaveBook}
                     />
                 ))
               ) : null

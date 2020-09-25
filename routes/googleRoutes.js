@@ -14,9 +14,9 @@ router.get('/googlebooks/:search', (req, res) => {
       link: book.volumeInfo.infoLink,
       googleId: book.id
     })))
-    // .then(apiMedia => Media.find()
-    //   .then(media => apiMedia.filter(data =>
-    //     media.every(dbData => dbData.imdbID !== data.imdbID))))
+    .then(apiBooks => Book.find()
+      .then(books => apiBooks.filter(data =>
+        books.every(dbData => dbData.googleId !== data.googleId))))
     .then((book) => res.json(book))
     .catch(err => console.log(err))
 })
